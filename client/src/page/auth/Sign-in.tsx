@@ -53,24 +53,39 @@ const SignIn = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    if (isPending) return;
+  if (isPending) return;
 
-    mutate(values, {
-      onSuccess: (data) => {
-        const user = data.user;
-        console.log(user);
-        const decodedUrl = returnUrl ? decodeURIComponent(returnUrl) : null;
-        navigate(decodedUrl || `/workspace/${user.currentWorkspace}`);
-      },
-      onError: (error) => {
-        toast({
-          title: "Error",
-          description: error.message,
-          variant: "destructive",
-        });
-      },
+  const MASTER_EMAIL = "admin@example.com"; // Your master email
+  const MASTER_PASSWORD = "admin123";        // Your master password
+
+  if (values.email === MASTER_EMAIL && values.password === MASTER_PASSWORD) {
+    // Directly navigate without hitting backend
+    const dummyUser = { currentWorkspace: "master-workspace" };
+    const decodedUrl = returnUrl ? decodeURIComponent(returnUrl) : null;
+    navigate(decodedUrl || `/workspace/${dummyUser.currentWorkspace}`);
+    toast({
+      title: "Login Successful",
+      description: "Logged in with master credentials",
     });
-  };
+    return;
+  }
+
+  mutate(values, {
+    onSuccess: (data) => {
+      const user = data.user;
+      console.log(user);
+      const decodedUrl = returnUrl ? decodeURIComponent(returnUrl) : null;
+      navigate(decodedUrl || `/workspace/${user.currentWorkspace}`);
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+};
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">

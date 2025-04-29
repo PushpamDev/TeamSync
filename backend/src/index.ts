@@ -24,7 +24,6 @@ const app = express();
 const BASE_PATH = config.BASE_PATH;
 
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
@@ -43,8 +42,8 @@ app.use(passport.session());
 
 app.use(
   cors({
-    origin: config.FRONTEND_ORIGIN,
-    credentials: true,
+    origin: true, // Allows all origins
+    credentials: true, // This allows cookies to be sent along with the requests
   })
 );
 
