@@ -52,14 +52,14 @@ app.use(
 );
 
 // Public route for sanity check
-app.get(
-  "/",
-  asyncHandler(async (req: Request, res: Response) => {
-    return res.status(HTTPSTATUS.OK).json({
-      message: "Welcome to TeamSync API 🚀",
-    });
-  })
-);
+// app.get(
+//   "/",
+//   asyncHandler(async (req: Request, res: Response) => {
+//     return res.status(HTTPSTATUS.OK).json({
+//       message: "Welcome to TeamSync API 🚀",
+//     });
+//   })
+// );
 
 // API routes
 app.use(`${BASE_PATH}/auth`, authRoutes);
