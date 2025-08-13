@@ -20,6 +20,8 @@ import memberRoutes from "./routes/member.route";
 import projectRoutes from "./routes/project.route";
 import taskRoutes from "./routes/task.route";
 
+import path from "path";
+
 const app = express();
 const BASE_PATH = config.BASE_PATH;
 
@@ -42,8 +44,8 @@ app.use(passport.session());
 
 app.use(
   cors({
-    origin: true, // Allows all origins
-    credentials: true, // This allows cookies to be sent along with the requests
+    origin: true, // Allows all origins (adjust in prod)
+    credentials: true,
   })
 );
 
@@ -60,12 +62,23 @@ app.get(
   })
 );
 
+// API routes
 app.use(`${BASE_PATH}/auth`, authRoutes);
 app.use(`${BASE_PATH}/user`, isAuthenticated, userRoutes);
 app.use(`${BASE_PATH}/workspace`, isAuthenticated, workspaceRoutes);
 app.use(`${BASE_PATH}/member`, isAuthenticated, memberRoutes);
 app.use(`${BASE_PATH}/project`, isAuthenticated, projectRoutes);
 app.use(`${BASE_PATH}/task`, isAuthenticated, taskRoutes);
+
+// Serve frontend (static files from dist/public)
+const clientDistPath = path.join(__dirname, "public");
+app.use(express.static(clientDistPath));
+
+// SPA fallback
+app.get("*", (req, res) => {
+  res.sendFile(path.join(clientDistPath, "index.html"));
+});
+
 
 app.use(errorHandler);
 

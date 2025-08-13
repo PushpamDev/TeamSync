@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: Teamsync
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: |
+      npm ci --prefer-offline
+      cd ../client && npm ci --prefer-offline
+      cd ../backend
+      npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+      - key: NODE_ENV
+        value: production
