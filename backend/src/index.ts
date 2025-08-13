@@ -35,7 +35,7 @@ app.use(
     maxAge: 24 * 60 * 60 * 1000,
     secure: config.NODE_ENV === "production",
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: config.NODE_ENV === "production" ? "none" : "lax",
   })
 );
 
@@ -46,7 +46,7 @@ app.use(passport.session());
 // CORS setup
 app.use(
   cors({
-    origin: true, // allow all origins for now, restrict in production
+    origin: config.FRONTEND_ORIGIN, // allow all origins for now, restrict in production
     credentials: true,
   })
 );
