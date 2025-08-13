@@ -5,23 +5,24 @@ services:
     plan: free
     rootDir: backend
     buildCommand: |
-      # Install backend dependencies
+      # Install backend deps
       npm ci --prefer-offline
 
-      # Build frontend
+      # Install and build frontend
       cd ../client
       npm ci --prefer-offline
       npm run build
 
-      # Copy frontend build into backend's public folder
-      rm -rf ../backend/dist/public
-      mkdir -p ../backend/dist/public
-      cp -r dist/* ../backend/dist/public/
-
-      # Build backend
+      # Go back to backend
       cd ../backend
+
+      # Copy built frontend to backend's public folder
+      mkdir -p public
+      cp -r ../client/dist/* public/
+
+      # Build backend TypeScript
       npm run build
-    startCommand: node dist/index.js
+    startCommand: npm run start
     envVars:
       - key: NODE_VERSION
         value: 18
