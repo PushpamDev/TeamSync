@@ -5,8 +5,22 @@ services:
     plan: free
     rootDir: backend
     buildCommand: |
+      echo "Installing backend dependencies..."
+      npm ci --prefer-offline
+
+      echo "Building backend..."
+      npm run build
+
+      echo "Building frontend..."
+      cd ../client
       npm ci --prefer-offline
       npm run build
+      cd ../backend
+
+      echo "Copying frontend build to backend..."
+      rm -rf dist/public
+      mkdir -p dist/public
+      cp -R ../client/dist/* dist/public
     startCommand: npm run start
     envVars:
       - key: NODE_VERSION
