@@ -3,14 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-"scripts": {
-  "seed": "ts-node src/seeders/role.seeder.ts",
-  "dev": "ts-node-dev --files src/index.ts",
-  "build": "npm run build:client && tsc && npm run copy-client",
-  "build:client": "cd ../client && npm ci --prefer-offline && npm run build",
-  "copy-client": "rm -rf dist/public && mkdir -p dist/public && cp -r ../client/dist/* dist/public/",
-  "start": "node dist/index.js"
-},
+  "scripts": {
+    "seed": "ts-node src/seeders/role.seeder.ts",
+    "dev": "ts-node-dev --files src/index.ts",
+    "build": "tsc && npm run copy-client",
+    "copy-client": "rimraf dist/public && mkdir -p dist/public && cp -r ../client/dist/* dist/public/",
+    "start": "node dist/index.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -38,6 +37,7 @@
     "@types/passport": "^1.0.17",
     "@types/passport-google-oauth20": "^2.0.16",
     "@types/passport-local": "^1.0.38",
+    "rimraf": "^5.0.5",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.7.2"
   }
