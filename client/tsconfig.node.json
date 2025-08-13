@@ -6,8 +6,13 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
-    /* Bundler mode */
-    "moduleResolution": "bundler",
+    /* Node build mode */
+    "moduleResolution": "Node",
+    "types": ["node"],
+    "allowSyntheticDefaultImports": true,  // ✅ allows `import path from "path"`
+    "esModuleInterop": true,               // ✅ makes CommonJS behave more like ES modules
+
+    /* Helpful settings */
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
@@ -19,6 +24,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
+
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
